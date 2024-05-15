@@ -257,7 +257,12 @@ class Gemini(LLM):
             if response_role is None:
                 response_role = response_content.role
             response_parts: List[GenerationResponsePart] = response_content.parts
-            _part_dict = response_parts[0].to_dict()
+            if len(response_parts) > 0:
+                _part_dict = response_parts[0].to_dict()
+            else:
+                _part_dict = {
+                    'text': ''
+                }
 
             # -*- Return text if present, otherwise get function call
             if "text" in _part_dict:

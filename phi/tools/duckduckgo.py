@@ -45,7 +45,7 @@ class DuckDuckGo(Toolkit):
         """
         logger.debug(f"Searching DDG for: {query}")
         ddgs = DDGS(headers=self.headers, proxy=self.proxy, proxies=self.proxies, timeout=self.timeout)
-        return json.dumps(ddgs.text(keywords=query, max_results=(self.fixed_max_results or max_results)), indent=2)
+        return json.dumps(ddgs.text(keywords=query, max_results=(self.fixed_max_results or max_results)), indent=2, ensure_ascii=False)
 
     def duckduckgo_news(self, query: str, max_results: int = 5) -> str:
         """Use this function to get the latest news from DuckDuckGo.
@@ -59,4 +59,4 @@ class DuckDuckGo(Toolkit):
         """
         logger.debug(f"Searching DDG news for: {query}")
         ddgs = DDGS(headers=self.headers, proxy=self.proxy, proxies=self.proxies, timeout=self.timeout)
-        return json.dumps(ddgs.news(keywords=query, max_results=(self.fixed_max_results or max_results)), indent=2)
+        return json.dumps(ddgs.news(keywords=query, max_results=(self.fixed_max_results or max_results)), indent=2, ensure_ascii=False)

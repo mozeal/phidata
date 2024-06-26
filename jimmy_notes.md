@@ -1,0 +1,1 @@
+- assistant > get_references_from_knowledge_base > json.dumps > ensure_ascii = False

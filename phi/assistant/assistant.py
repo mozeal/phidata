@@ -726,7 +726,7 @@ class Assistant(BaseModel):
 
             return yaml.dump([doc.to_dict() for doc in relevant_docs])
 
-        return json.dumps([doc.to_dict() for doc in relevant_docs], indent=2)
+        return json.dumps([doc.to_dict() for doc in relevant_docs], indent=2, ensure_ascii=False)
 
     def get_formatted_chat_history(self) -> Optional[str]:
         """Returns a formatted chat history to add to the user prompt"""
@@ -1304,7 +1304,7 @@ class Assistant(BaseModel):
             chats_added += 1
             if num_chats is not None and chats_added >= num_chats:
                 break
-        return json.dumps(history)
+        return json.dumps(history, ensure_ascii=False, indent=2)
 
     def get_tool_call_history(self, num_calls: int = 3) -> str:
         """Use this function to get the tools called by the assistant in reverse chronological order.
@@ -1324,7 +1324,7 @@ class Assistant(BaseModel):
         if len(tool_calls) == 0:
             return ""
         logger.debug(f"tool_calls: {tool_calls}")
-        return json.dumps(tool_calls)
+        return json.dumps(tool_calls, ensure_ascii=False, indent=2)
 
     def search_knowledge_base(self, query: str) -> str:
         """Use this function to search the knowledge base for information about a query.
@@ -1358,7 +1358,7 @@ class Assistant(BaseModel):
         document_name = self.name
         if document_name is None:
             document_name = query.replace(" ", "_").replace("?", "").replace("!", "").replace(".", "")
-        document_content = json.dumps({"query": query, "result": result})
+        document_content = json.dumps({"query": query, "result": result}, indent=2, ensure_ascii=False)
         logger.info(f"Adding document to knowledge base: {document_name}: {document_content}")
         self.knowledge_base.load_document(
             document=Document(
@@ -1432,7 +1432,7 @@ class Assistant(BaseModel):
         elif isinstance(response, BaseModel):
             return response.model_dump_json(exclude_none=True, indent=4)
         else:
-            return json.dumps(response, indent=4)
+            return json.dumps(response, indent=4, ensure_ascii=False)
 
     def print_response(
         self,

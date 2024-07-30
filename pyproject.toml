@@ -1,6 +1,6 @@
 [project]
 name = "phidata"
-version = "2.4.27"
+version = "2.4.28"
 description = "Memory, knowledge and tools for LLMs."
 requires-python = ">=3.7"
 readme = "README.md"
@@ -37,6 +37,15 @@ aws = [
 ]
 k8s = [
     "docker",
+    "kubernetes"
+]
+all = [
+    "mypy",
+    "pytest",
+    "ruff",
+    "types-pyyaml",
+    "docker",
+    "boto3",
     "kubernetes"
 ]
 
